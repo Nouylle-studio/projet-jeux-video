@@ -11,3 +11,5 @@ Binaries/
 Build/
 .DS_Store
 Thumbs.db
+Windows/
+*.zip
