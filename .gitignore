@@ -4,3 +4,10 @@ DerivedDataCache/
 Intermediate/
 Saved/
 .vs/
+DerivedDataCache/
+Intermediate/
+Saved/
+Binaries/
+Build/
+.DS_Store
+Thumbs.db
