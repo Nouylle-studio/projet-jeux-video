@@ -13,3 +13,5 @@ Build/
 Thumbs.db
 Windows/
 *.zip
+Setup_SOAF_v1.exe
+*.nsi
