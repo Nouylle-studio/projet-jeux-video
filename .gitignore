@@ -4,3 +4,14 @@ DerivedDataCache/
 Intermediate/
 Saved/
 .vs/
+DerivedDataCache/
+Intermediate/
+Saved/
+Binaries/
+Build/
+.DS_Store
+Thumbs.db
+Windows/
+*.zip
+Setup_SOAF_v1.exe
+*.nsi
