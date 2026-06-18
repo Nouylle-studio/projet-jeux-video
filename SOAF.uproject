@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "5.4",
+	"EngineAssociation": "{2F28F296-A946-52A9-55A6-CE9B1C07D692}",
 	"Category": "",
 	"Description": "",
 	"Plugins": [
@@ -14,11 +14,6 @@
 		{
 			"Name": "MovieRenderPipeline",
 			"Enabled": true
-		},
-		{
-			"Name": "GraphPrinter",
-			"Enabled": true,
-			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/466303b6cd724968b3ee0a1a1b623f4b"
 		}
 	]
 }
