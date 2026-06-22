@@ -12,7 +12,8 @@ public class SOAF : ModuleRules
 		PublicIncludePaths.AddRange(new string[] {
 			Path.Combine(ModuleDirectory, "Core"),
 			Path.Combine(ModuleDirectory, "Characters"),
-			Path.Combine(ModuleDirectory, "Tram")
+			Path.Combine(ModuleDirectory, "Tram"),
+			Path.Combine(ModuleDirectory, "Items")
 		});
 
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG", "EnhancedInput" });

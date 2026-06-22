@@ -1,6 +1,7 @@
 #include "SOAFCharacter.h"
 #include "Tram.h"
 #include "TramStop.h"
+#include "SOAFInteractable.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 
@@ -60,6 +61,11 @@ void ASOAFCharacter::OnInteract()
 			return;
 		}
 
+		if (Actor->Implements<USOAFInteractable>())
+		{
+			ISOAFInteractable::Execute_Interact(Actor, this);
+			return;
+		}
 		OnInteractWithActor(Actor);
 	}
 }
