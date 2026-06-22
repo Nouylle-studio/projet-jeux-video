@@ -1,7 +1,14 @@
-# projet-jeux-video
-little project to make a video-game
+# projet-jeux-video - Nouylle SOAF
+> SOAF -> Spartan Omega Alpha Fire
 
-Le projet Unreal Engine vide est en place, essayez de nommer vos elements de la manière la plus clair possible avec notamment un préfixe définissant le type de l'élement (ex: M_ex si c'est un material) , nous travaillerons sur la version 5.4.4 (la même que celle installée dans l'IUT).
-Chaque personne aura sa propre branche pour ensuite push dans deux branches principales, une contenant tous les modèles 3D et l'autre toutes les interactions et les codes en blueprint. Je pense que cela permettrait de travailler sur des projets moins lourds et de plus sécurisé le projet.
-Toutes les tâches seront ajoutées au fur et à mesure dans le projet associé à ce répertoire. Si vous trouvez qu'il en manque, ajoutez vos idées et on en parlera à la prochaine réunion.
-lors des push pour des soucis de responsabilité écologique gardez seulement le fichier.uproject et les dossiers config et content, tout les autres ne sont pas nescessaires.
+## Concept & Pitch de base :
+Jeu d'aventure narratif. Le Joueur incarne Noah Waffle un enfant afro-américain de 15 ans. Il parcourt un monde dystopique régi par un dictateur nommé Manna Tonast. Il a mis en place un monde où la diversité est absente, sans une bonne ambiance de soirée d'été, rien de marrant.
+
+Noah se verra attribuer plusieurs quêtes durant son aventure, dont celle où il doit jouer de la musique avec un groupe pour redonner goût à la vie aux habitants, ou bien celle où il doit réaliser une peinture pleine de couleurs pour embellir la vision des passants.
+
+## Lieux à découvrir :
+- Rue où siège le mouvement YMCA à la période de la renaissance d'Harlem
+- Salle de classe
+- Le Grand Parc
+
+*Jeu jouable sur Windows uniquement, réalisé avec Unreal Engine 5.4.4 ainsi que 3DSMax 2026.*
