@@ -1,5 +1,10 @@
+UpgradeLog.htm
 *.fbx
-Binaries/
+Binaries/**
+!Binaries/Win64/
+Binaries/Win64/**
+!Binaries/Win64/UnrealEditor-SOAF.dll
+!Binaries/Win64/UnrealEditor.modules
 DerivedDataCache/
 Intermediate/
 Saved/
@@ -12,3 +17,4 @@ Thumbs.db
 *.nsi
 Setup_SOAF_v1.exe
 Setup_Nouylle_SOAF_v1.exe
+Setup_Nouylle_SOAF_v2.exe
