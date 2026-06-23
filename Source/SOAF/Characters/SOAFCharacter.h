@@ -30,6 +30,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Interaction")
 	void OnInteractWithActor(AActor* Actor);
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Interaction")
+	void OnDropHeldItem();
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

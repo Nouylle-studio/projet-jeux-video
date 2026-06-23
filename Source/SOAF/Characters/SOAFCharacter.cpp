@@ -41,6 +41,12 @@ void ASOAFCharacter::OnInteract()
 {
 	if (bIsOnTram) return;
 
+	if (HeldItem)
+	{
+		OnDropHeldItem();
+		return;
+	}
+
 	TArray<AActor*> OverlappingActors;
 	GetOverlappingActors(OverlappingActors);
 
