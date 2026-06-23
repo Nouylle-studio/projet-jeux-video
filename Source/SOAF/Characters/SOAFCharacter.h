@@ -33,6 +33,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Interaction")
 	void OnDropHeldItem();
 
+	UFUNCTION(BlueprintCallable, Category = "Settings")
+	void ApplyKeyMapping(FName MappingName, FKey NewKey);
+
+	UFUNCTION(BlueprintCallable, Category = "Settings")
+	void RegisterMappingContextForUserSettings();
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

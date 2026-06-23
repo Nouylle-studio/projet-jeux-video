@@ -4,6 +4,8 @@
 #include "SOAFInteractable.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "UserSettings/EnhancedInputUserSettings.h"
+#include "GameplayTagContainer.h"
 
 ASOAFCharacter::ASOAFCharacter()
 {
@@ -24,6 +26,7 @@ void ASOAFCharacter::BeginPlay()
 				Subsystem->AddMappingContext(IMC_Default, 0);
 		}
 	}
+	RegisterMappingContextForUserSettings();
 }
 
 void ASOAFCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -34,6 +37,47 @@ void ASOAFCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	{
 		if (IA_Interact)
 			EIC->BindAction(IA_Interact, ETriggerEvent::Started, this, &ASOAFCharacter::OnInteract);
+	}
+}
+
+void ASOAFCharacter::RegisterMappingContextForUserSettings()
+{
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* Sub = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer()))
+		{
+			if (UEnhancedInputUserSettings* US = Sub->GetUserSettings())
+			{
+				if (IMC_Default && !US->IsMappingContextRegistered(IMC_Default))
+				{
+					FGameplayTagContainer Failure;
+					US->RegisterInputMappingContext(IMC_Default);
+				}
+			}
+		}
+	}
+}
+
+void ASOAFCharacter::ApplyKeyMapping(FName MappingName, FKey NewKey)
+{
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* Sub = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer()))
+		{
+			if (UEnhancedInputUserSettings* US = Sub->GetUserSettings())
+			{
+				FMapPlayerKeyArgs Args;
+				Args.MappingName = MappingName;
+				Args.Slot = EPlayerMappableKeySlot::First;
+				Args.NewKey = NewKey;
+				Args.bCreateMatchingSlotIfNeeded = true;
+
+				FGameplayTagContainer Failure;
+				US->MapPlayerKey(Args, Failure);
+				US->ApplySettings();
+				US->AsyncSaveSettings();
+			}
+		}
 	}
 }
 
