@@ -185,4 +185,6 @@ void ASOAFCharacter::DropHeldItem()
 		GetWorld()->SpawnActor<AActor>(CurrentPickupClass, DropLocation, FRotator::ZeroRotator, Params);
 		CurrentPickupClass = nullptr;
 	}
+
+	OnItemDropped();
 }

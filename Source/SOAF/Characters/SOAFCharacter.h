@@ -38,6 +38,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Interaction")
 	void OnInteractWithActor(AActor* Actor);
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Pickup")
+	void OnItemDropped();
+
 	UFUNCTION(BlueprintCallable, Category = "Settings")
 	void ApplyKeyMapping(FName MappingName, FKey NewKey);
 
