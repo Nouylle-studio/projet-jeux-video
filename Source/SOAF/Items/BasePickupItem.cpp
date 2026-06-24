@@ -1,4 +1,5 @@
 #include "BasePickupItem.h"
+#include "SOAFCharacter.h"
 
 ABasePickupItem::ABasePickupItem()
 {
@@ -11,5 +12,6 @@ ABasePickupItem::ABasePickupItem()
 
 void ABasePickupItem::Interact_Implementation(ACharacter* Interactor)
 {
-	// Logique override dans les classes Blueprint enfants
+	if (ASOAFCharacter* Character = Cast<ASOAFCharacter>(Interactor))
+		Character->StartPickup(this, HeldItemClass);
 }

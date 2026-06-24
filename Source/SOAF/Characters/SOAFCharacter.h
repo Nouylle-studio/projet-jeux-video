@@ -7,6 +7,8 @@
 
 class UInputAction;
 class UInputMappingContext;
+class ABasePickupItem;
+class UAnimMontage;
 
 UCLASS()
 class SOAF_API ASOAFCharacter : public ACharacter
@@ -27,11 +29,14 @@ public:
 
 	bool bIsOnTram;
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Interaction")
-	void OnInteractWithActor(AActor* Actor);
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup")
+	UAnimMontage* PickupMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup")
+	FName PickupSocketName = FName("Guitar_Socket");
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Interaction")
-	void OnDropHeldItem();
+	void OnInteractWithActor(AActor* Actor);
 
 	UFUNCTION(BlueprintCallable, Category = "Settings")
 	void ApplyKeyMapping(FName MappingName, FKey NewKey);
@@ -39,10 +44,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Settings")
 	void RegisterMappingContextForUserSettings();
 
+	UFUNCTION(BlueprintCallable, Category = "Pickup")
+	void StartPickup(ABasePickupItem* PickupActor, TSubclassOf<AActor> InHeldItemClass);
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
 	void OnInteract();
+	void DropHeldItem();
+	void OnPickupMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+
+	TWeakObjectPtr<ABasePickupItem> PendingPickupActor;
+	TSubclassOf<AActor> CurrentPickupClass;
 };

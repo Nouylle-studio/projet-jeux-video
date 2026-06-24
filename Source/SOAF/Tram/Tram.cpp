@@ -7,22 +7,22 @@
 
 ATram::ATram()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = true; // active the tick, to move the tram each frame, only for tram, not for others actors
 
-	TramMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TramMesh"));
+	TramMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TramMesh")); // create the mesh component for the tram
 	RootComponent = TramMesh;
-	TramMesh->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	TramMesh->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore); // ignore camera collision
 
-	BoardTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("BoardTrigger"));
-	BoardTrigger->SetupAttachment(RootComponent);
+	BoardTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("BoardTrigger")); // create the box component for the trigger to board the tram
+	BoardTrigger->SetupAttachment(RootComponent); // attach player to the tram
 	BoardTrigger->SetBoxExtent(FVector(200.f, 200.f, 100.f));
 	BoardTrigger->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 
-	PassengerSeat = CreateDefaultSubobject<USceneComponent>(TEXT("PassengerSeat"));
+	PassengerSeat = CreateDefaultSubobject<USceneComponent>(TEXT("PassengerSeat")); // create a point in the tram where the player is seated
 	PassengerSeat->SetupAttachment(RootComponent);
 
-	Speed = 300.f;
-	Progress = 0.f;
+	Speed = 300.f; // speed : cm/s
+	Progress = 0.f; // courant position
 	bIsMoving = false;
 	bPlayerOnBoard = false;
 	bGoingForward = true;

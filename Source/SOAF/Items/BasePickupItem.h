@@ -16,5 +16,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pickup")
 	UStaticMeshComponent* Mesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup")
+	TSubclassOf<AActor> HeldItemClass;
+
 	virtual void Interact_Implementation(ACharacter* Interactor) override;
 };

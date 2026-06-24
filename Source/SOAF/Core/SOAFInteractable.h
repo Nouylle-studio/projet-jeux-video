@@ -4,7 +4,7 @@
 #include "UObject/Interface.h"
 #include "SOAFInteractable.generated.h"
 
-UINTERFACE(MinimalAPI, Blueprintable)
+UINTERFACE(Blueprintable)
 class USOAFInteractable : public UInterface
 {
 	GENERATED_BODY()
@@ -14,6 +14,6 @@ class SOAF_API ISOAFInteractable
 {
 	GENERATED_BODY()
 public:
-	UFUNCTION(BlueprintNativeEvent, Category = "Interaction")
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interaction")
 	void Interact(ACharacter* Interactor);
 };

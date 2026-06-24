@@ -2,10 +2,13 @@
 #include "Tram.h"
 #include "TramStop.h"
 #include "SOAFInteractable.h"
+#include "BasePickupItem.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "UserSettings/EnhancedInputUserSettings.h"
 #include "GameplayTagContainer.h"
+#include "Animation/AnimMontage.h"
+#include "Animation/AnimInstance.h"
 
 ASOAFCharacter::ASOAFCharacter()
 {
@@ -87,7 +90,7 @@ void ASOAFCharacter::OnInteract()
 
 	if (HeldItem)
 	{
-		OnDropHeldItem();
+		DropHeldItem();
 		return;
 	}
 
@@ -117,5 +120,69 @@ void ASOAFCharacter::OnInteract()
 			return;
 		}
 		OnInteractWithActor(Actor);
+	}
+}
+
+void ASOAFCharacter::StartPickup(ABasePickupItem* PickupActor, TSubclassOf<AActor> InHeldItemClass)
+{
+	if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("StartPickup C++ called"));
+	if (!PickupActor || !InHeldItemClass)
+	{
+		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("StartPickup EARLY RETURN — PickupActor: %s, HeldItemClass: %s"),
+			PickupActor ? TEXT("OK") : TEXT("NULL"),
+			InHeldItemClass ? *InHeldItemClass->GetName() : TEXT("NULL")));
+		return;
+	}
+
+	PendingPickupActor = PickupActor;
+	CurrentPickupClass = PickupActor->GetClass();
+	PickupActor->Mesh->SetVisibility(false);
+
+	FActorSpawnParameters Params;
+	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	AActor* Spawned = GetWorld()->SpawnActor<AActor>(InHeldItemClass, GetActorTransform(), Params);
+	if (Spawned)
+	{
+		Spawned->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, PickupSocketName);
+		HeldItem = Spawned;
+	}
+
+	if (UAnimInstance* Anim = GetMesh()->GetAnimInstance())
+	{
+		if (PickupMontage)
+		{
+			Anim->Montage_Play(PickupMontage);
+			FOnMontageEnded EndDelegate;
+			EndDelegate.BindUObject(this, &ASOAFCharacter::OnPickupMontageEnded);
+			Anim->Montage_SetEndDelegate(EndDelegate, PickupMontage);
+		}
+	}
+}
+
+void ASOAFCharacter::OnPickupMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	if (PendingPickupActor.IsValid())
+	{
+		PendingPickupActor->Destroy();
+		PendingPickupActor = nullptr;
+	}
+}
+
+void ASOAFCharacter::DropHeldItem()
+{
+	if (!HeldItem) return;
+
+	FVector DropLocation = GetActorLocation() + GetActorForwardVector() * 100.f;
+
+	HeldItem->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+	HeldItem->Destroy();
+	HeldItem = nullptr;
+
+	if (CurrentPickupClass)
+	{
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		GetWorld()->SpawnActor<AActor>(CurrentPickupClass, DropLocation, FRotator::ZeroRotator, Params);
+		CurrentPickupClass = nullptr;
 	}
 }
